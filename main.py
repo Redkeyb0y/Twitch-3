@@ -1,4 +1,11 @@
-# -*- coding: utf-8 -*-
+import signal
+
+def signal_handler(sig, frame):
+    print("Ctrl+C is disabled. To exit, use another method.")
+    # Optionally, you can perform other actions here instead of just printing a message.
+
+# Set the signal handler to ignore SIGINT
+signal.signal(signal.SIGINT, signal_handler)
 
 import logging
 from colorama import Fore
@@ -52,9 +59,9 @@ twitch_miner = TwitchChannelPointsMiner(
             disable_notification=True,                                              # Revoke the notification (sound/vibration)
         ),
         discord=Discord(
-            webhook_api="https://discord.com/api/webhooks/0123456789/0a1B2c3D4e5F6g7H8i9J",  # Discord Webhook URL
+            webhook_api="https://discord.com/api/webhooks/1252359368431898756/lUtnO07NucPRcY9253O1s61mEYeY-Ao8MKni-HCQCNnTZI2WQrce9awkbgJRY7CdCrSV",  # Discord Webhook URL
             events=[Events.STREAMER_ONLINE, Events.STREAMER_OFFLINE,
-                    Events.BET_LOSE, Events.CHAT_MENTION],                                  # Only these events will be sent to the chat
+                    Events.GAIN_FOR_CLAIM, Events.GAIN_FOR_WATCH, Events.GAIN_FOR_RAID],                                  # Only these events will be sent to the chat
         ),
         matrix=Matrix(
             username="twitch_miner",                                                   # Matrix username (without homeserver)
@@ -80,7 +87,7 @@ twitch_miner = TwitchChannelPointsMiner(
         chat=ChatPresence.ONLINE,               # Join irc chat to increase watch-time [ALWAYS, NEVER, ONLINE, OFFLINE]
         bet=BetSettings(
             strategy=Strategy.SMART,            # Choose you strategy!
-            percentage=5,                       # Place the x% of your channel points
+            percentage=10,                      # Place the x% of your channel points
             percentage_gap=20,                  # Gap difference between outcomesA and outcomesB (for SMART strategy)
             max_points=50000,                   # If the x percentage of your channel points is gt bet_max_points set this value
             stealth_mode=True,                  # If the calculated amount of channel points is GT the highest bet, place the highest value minus 1-2 points Issue #33
@@ -108,14 +115,18 @@ twitch_miner = TwitchChannelPointsMiner(
 
 twitch_miner.mine(
     [
-       Streamer("pimpcs", settings=StreamerSettings(make_predictions=True  , follow_raid=True , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART      , percentage=5 , stealth_mode=True,  percentage_gap=20 , max_points=234   , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_USERS,      where=Condition.LTE, value=800 ) ) )),
-       Streamer("lobanjicaa", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True ,                     bet=BetSettings(strategy=Strategy.PERCENTAGE , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=1234  , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.GTE, value=250 ) ) )),
-       Streamer("olofmeister", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True ,                     bet=BetSettings(strategy=Strategy.PERCENTAGE , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=1234  , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.GTE, value=250 ) ) )),
-       Streamer("get_right", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True ,                     bet=BetSettings(strategy=Strategy.PERCENTAGE , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=1234  , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.GTE, value=250 ) ) )),
-       Streamer("haixxd", settings=StreamerSettings(make_predictions=False , follow_raid=True  , claim_drops=True ,                     bet=BetSettings(strategy=Strategy.PERCENTAGE , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=1234  , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.GTE, value=250 ) ) )),
-       Streamer("shoxiejesuss", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True ,                     bet=BetSettings(strategy=Strategy.PERCENTAGE , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=1234  , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.GTE, value=250 ) ) )),
-       Streamer("gunthersuper", settings=StreamerSettings(make_predictions=True  , follow_raid=False , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART      , percentage=5 , stealth_mode=True,  percentage_gap=20 , max_points=234   , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_USERS,      where=Condition.LTE, value=800 ) ) ))
-    ],                                  # Array of streamers (order = priority)
+       Streamer("Mauisnake", settings=StreamerSettings(make_predictions=True  , follow_raid=True , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False,  percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,      where=Condition.LTE, value=800 ) ) )),
+       Streamer("banks", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
+       Streamer("PimpCS", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
+       Streamer("smooyacs", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
+       Streamer("teeqo", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
+       Streamer("arrowcs", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
+       Streamer("olofmeister", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
+       Streamer("kennys", settings=StreamerSettings(make_predictions=True  , follow_raid=True , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False,  percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,      where=Condition.LTE, value=800 ) ) )),
+       Streamer("ohnePixel", settings=StreamerSettings(make_predictions=True  , follow_raid=True , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False,  percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,      where=Condition.LTE, value=800 ) ) )),
+       Streamer("fl0m", settings=StreamerSettings(make_predictions=True  , follow_raid=True , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False,  percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,      where=Condition.LTE, value=800 ) ) )),
+        
+   ],                                  # Array of streamers (order = priority)
     followers=False,                    # Automatic download the list of your followers
     followers_order=FollowersOrder.ASC  # Sort the followers list by follow date. ASC or DESC
 )
