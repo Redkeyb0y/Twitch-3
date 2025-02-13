@@ -118,8 +118,7 @@ twitch_miner.mine(
        Streamer("PimpCS", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
        Streamer("chopperinho", settings=StreamerSettings(make_predictions=True , follow_raid=True  , claim_drops=True , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False, percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,     where=Condition.LTE, value=800 ) ) )),
        Streamer("kennys", settings=StreamerSettings(make_predictions=True  , follow_raid=True , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False,  percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,      where=Condition.LTE, value=800 ) ) )),
-       Streamer("ohnePixel", settings=StreamerSettings(make_predictions=True  , follow_raid=True , claim_drops=True  , watch_streak=True , bet=BetSettings(strategy=Strategy.SMART , percentage=5 , stealth_mode=False,  percentage_gap=20 , max_points=5000 , filter_condition=FilterCondition(by=OutcomeKeys.TOTAL_POINTS,      where=Condition.LTE, value=800 ) ) )),
-              
+                  
    ],                                  # Array of streamers (order = priority)
     followers=False,                    # Automatic download the list of your followers
     followers_order=FollowersOrder.ASC  # Sort the followers list by follow date. ASC or DESC
